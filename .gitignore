@@ -1,7 +1,14 @@
 *.class
 
+#intelij files
+*.idea
+*.iml
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
+
+#target foder
+/target
 
 # Package Files #
 *.jar
