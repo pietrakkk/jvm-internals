@@ -13,11 +13,11 @@ public class TestUtils {
 
     private static Phone phone = new Phone();
 
-    public static void getPublicValueByReflection(long numberOfInvokes, Class objectClass, Object objectInstance) {
+    public static void getPublicValueByReflection(long loopCircCount, Class objectClass, Object objectInstance) {
         String operatingSystem;
         try {
             Field publicStringField;
-            for (int i = 0; i < numberOfInvokes; i++) {
+            for (int i = 0; i < loopCircCount; i++) {
                 publicStringField = objectClass.getDeclaredField(FIELD_NAME);
                 operatingSystem = (String) publicStringField.get(objectInstance);
             }
@@ -26,12 +26,12 @@ public class TestUtils {
         }
     }
 
-    public static void setPublicValueByReflection(long numberOfInvokes, Class objectClass, Object objectInstance) {
+    public static void setPublicValueByReflection(long loopCircCount, Class objectClass, Object objectInstance) {
         try {
             Field publicStringField;
-            for (int i = 0; i < numberOfInvokes; i++) {
+            for (int i = 0; i < loopCircCount; i++) {
                 publicStringField = objectClass.getDeclaredField(FIELD_NAME);
-                publicStringField.set(objectInstance, "Windows");
+                publicStringField.set(objectInstance, "Windows Phone");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,19 +43,7 @@ public class TestUtils {
             Method setPrimitiveInt;
             for (int i = 0; i < loopCircCount; i++) {
                 setPrimitiveInt = objectClass.getDeclaredMethod(METHOD_NAME, String.class);
-                setPrimitiveInt.invoke(objectInstance, "Android");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void setPublicStringByReflection(long loopCircCount, Class objectClass, Object objectInstance) {
-        try {
-            Field publicStringField;
-            for (int i = 0; i < loopCircCount; i++) {
-                publicStringField = objectClass.getDeclaredField(FIELD_NAME);
-                publicStringField.set(objectInstance, "Android");
+                setPrimitiveInt.invoke(objectInstance, "Microsoft");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,7 +52,7 @@ public class TestUtils {
 
     public static void runPublicMethod(long loopCircCount) {
         for (int i = 0; i < loopCircCount; i++) {
-            phone.setMake("Android");
+            phone.setMake("Microsoft");
         }
     }
 
@@ -78,7 +66,7 @@ public class TestUtils {
 
     public static void setPublicValue(long loopCircCount) {
         for (int i = 0; i < loopCircCount; i++) {
-            phone.operatingSystem = "Android";
+            phone.operatingSystem = "Windows Phone";
         }
     }
 }

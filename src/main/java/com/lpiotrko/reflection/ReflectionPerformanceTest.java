@@ -9,9 +9,10 @@ public class ReflectionPerformanceTest {
     public static void main(String[] args) {
         final String CLASS_SOURCE = "com.lpiotrko.reflection.dao.Phone";
         final long LOOP_CIRC_COUNT = 10000;
+        final long GLOBAL_LOOP_CIRC_COUNT = 100;
 
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < GLOBAL_LOOP_CIRC_COUNT; i++) {
             runNativeTests(LOOP_CIRC_COUNT);
             runReflectionTests(CLASS_SOURCE, LOOP_CIRC_COUNT);
         }
