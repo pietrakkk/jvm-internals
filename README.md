@@ -1,9 +1,8 @@
-# jvm-internals
+# jvm-internals 2016
 
-##OutOfMemoryError: 
+##Testy mechanizmu refleksji:
 
-Wywołanie tego wyjątku nastepuje, ponieważ dodawanie elementów w nieskończonej pętli do array listy wyczerpuje dostępną pamięć, która przeznaczona jest do wykonywania programu. 
-
+    Testy mechanizmów refleksji i czasu ich wykonania vs czasu wykonania natywnie.
 
 ##Uruchomienie:
-mvn exec: java
+    mvn exec: java lub mvn compile exec:java

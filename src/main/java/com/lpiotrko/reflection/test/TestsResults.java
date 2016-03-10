@@ -13,6 +13,7 @@ public class TestsResults {
     public static List<Long> setPublicValueRes = new ArrayList<>();
 
     public static void showTestsResults() {
+        printSingleResults();
         removeWorstAndBestResults();
         System.out.println("TEST RESULTS: ");
         System.out.println(String.format("Get public value native result: %d ns", getAvgTestsResult(getPublicValueRes)));
@@ -26,6 +27,23 @@ public class TestsResults {
 
     private static long getAvgTestsResult(List<Long> resultsList) {
         return (long) resultsList.stream().mapToLong(el -> el.longValue()).average().getAsDouble();
+    }
+
+    private static void printSingleResults() {
+        printTestSingleResult(getPublicValueRes, "GET PUBLIC VALUE:");
+        printTestSingleResult(getPublicValuesWithReflectionRes, "GET PUBLIC VALUE WITH REF:");
+        printTestSingleResult(setPublicValueRes, "SET PUBLIC VALUE:");
+        printTestSingleResult(setPublicValuesWithReflectionRes, "SET PUBLIC VALUE  WITH REF:");
+        printTestSingleResult(runPublicMethodRes, "RUN PUBLIC METHOD:");
+        printTestSingleResult(runPublicMethodReflectionRes, "RUN PUBLIC METHOD WITH REF:");
+    }
+
+    public static void printTestSingleResult(List<Long> list, String testName) {
+        System.out.println(testName);
+        for (Long item : list) {
+            System.out.println(item);
+        }
+        System.out.println("--------------------------------------------");
     }
 
     private static void removeWorstAndBestResults() {

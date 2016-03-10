@@ -9,7 +9,7 @@ public class ReflectionPerformanceTest {
     public static void main(String[] args) {
         final String CLASS_SOURCE = "com.lpiotrko.reflection.dao.Phone";
         final long LOOP_CIRC_COUNT = 10000;
-        final long GLOBAL_LOOP_CIRC_COUNT = 100;
+        final long GLOBAL_LOOP_CIRC_COUNT = 20;
 
 
         for (int i = 0; i < GLOBAL_LOOP_CIRC_COUNT; i++) {
