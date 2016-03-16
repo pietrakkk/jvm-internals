@@ -46,6 +46,7 @@ public class JsonParser {
     }
 
     private void processObjectFields(Object objectInstance, StringBuilder builder){
+        if(objectInstance == null){return;}
         Class objectClass = objectInstance.getClass();
         Field[] objectFields = objectClass.getDeclaredFields();
 
@@ -58,23 +59,32 @@ public class JsonParser {
         });
     }
 
+    private boolean isCustomObjectType(Field field){
+        return !field.getType().toString().startsWith("class java.") && !field.getType().isPrimitive();
+    }
+
     private void processSingleField(Field field, StringBuilder builder, Object objectInstance, boolean isLastElement){
         try {
             field.setAccessible(true);
+            builder.append(INVERTERD_COMMAS);
+            builder.append(field.getName());
+            builder.append(INVERTERD_COMMAS);
+            builder.append(COLON);
 
             if (isList(field)){
-                builder.append(INVERTERD_COMMAS);
-                builder.append(field.getName());
-                builder.append(INVERTERD_COMMAS);
-                builder.append(COLON);
                 builder.append(ARRAY_START);
                 Object list = field.get(objectInstance);
                 convertToJsonArray(list, builder);
                 builder.append(ARRAY_END);
 
 
+            } else if(isCustomObjectType(field)){
+                builder.append(FIELD_START);
+                processObjectFields(field.get(objectInstance), builder);
+                builder.append(FIELD_END);
+                tryToAppendComma(isLastElement, builder);
             }else{
-                prepareSimpleJsonField(field, objectInstance, builder);
+                prepareSimpleJsonValue(field, objectInstance, builder);
                 tryToAppendComma(isLastElement, builder);
             }
         } catch (IllegalAccessException e) {
@@ -109,14 +119,9 @@ public class JsonParser {
                 field.getType() == float.class;
     }
 
-    private void prepareSimpleJsonField(Field field, Object object, StringBuilder builder){
+    private void prepareSimpleJsonValue(Field field, Object object, StringBuilder builder){
         try {
             String fieldValue;
-            builder.append(INVERTERD_COMMAS);
-            builder.append(field.getName());
-            builder.append(INVERTERD_COMMAS);
-            builder.append(COLON);
-
             if(isNumber(field)){
                builder.append(field.get(object));
             }else{

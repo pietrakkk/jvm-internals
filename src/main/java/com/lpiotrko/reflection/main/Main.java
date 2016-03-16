@@ -17,6 +17,8 @@ public class Main {
         String jsonString = jsonParser.parseObjectToJsonString(phone);
         String jsonStringByJackson = convertObjectToJsonString(phone);
 
+        System.out.println(jsonString);
+        System.out.println(jsonStringByJackson);
         System.out.println(String.format("Test poprawności rozwiązania dla obiektu klasy Phone: %b",
                 jsonString.equals(jsonStringByJackson)));
     }
@@ -27,9 +29,9 @@ public class Main {
         Phone phone = new Phone();
 
         List<Contact> contacts = new ArrayList<>();
-
+        Contact contact;
         for(int i = 0; i < 10; i++){
-            Contact contact = new Contact();
+            contact = new Contact();
             contact.setName("Łukasz");
             contact.setSurname("Piotrkowski");
             contact.setNumber("511739689");
@@ -37,11 +39,19 @@ public class Main {
             contacts.add(contact);
         }
 
+        contact = new Contact();
+        contact.setName("XYZ");
+        contact.setSurname("Piotrkowski");
+        contact.setNumber("511739689");
+
+        contacts.add(contact);
+
         phone.setId(1L);
         phone.setYop(2015);
         phone.setModel("3310");
         phone.setMake("Nokia");
         phone.setContacts(contacts);
+        phone.setContact(contact);
 
         return phone;
     }

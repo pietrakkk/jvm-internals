@@ -8,6 +8,7 @@ public class Phone {
     private String make;
     private String model;
     private int yop;
+    private Contact contact;
     private List<Contact> contacts;
 
     public Long getId() {
@@ -36,6 +37,14 @@ public class Phone {
 
     public int getYop() {
         return yop;
+    }
+
+    public Contact getContact() {
+        return contact;
+    }
+
+    public void setContact(Contact contact) {
+        this.contact = contact;
     }
 
     public void setYop(int yop) {
