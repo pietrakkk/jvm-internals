@@ -1,12 +1,14 @@
 package com.lpiotrko.reflection.dao;
 
+import java.util.List;
+
 public class Phone {
 
     private Long id;
     private String make;
     private String model;
-    public String operatingSystem;
     private int yop;
+    private List<Contact> contacts;
 
     public Long getId() {
         return id;
@@ -38,5 +40,13 @@ public class Phone {
 
     public void setYop(int yop) {
         this.yop = yop;
+    }
+
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
     }
 }
