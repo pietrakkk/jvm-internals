@@ -2,17 +2,37 @@
 
 ##Testy mechanizmu refleksji:
 
-    POJO -> JSON parser
+    SimpleDateFormat thread safety test
 
-    Parser bierze pod uwagę tylko pola, do których posiadamy publiczny dostęp (gettery).
-    Dla porównania wygenerowany został string jsonowy przez blibliotekę jackson i własny parser.
-    Rezultaty obydwu parsowań dla testowego przypadku były identyczne.
+    Przeprowadzono testy SimpleFormat pod kątem thread safety. Jak łatwo się domyślić (czytając dokumentację) okazało się, że nie jest.
+    Przeprowadzono próbę skonwertowania daty (20 iteracji), w zależności od liczby uruchomień, rezultaty prezentowały się m. in. następująco:
 
-    Parser obsługuje:
-        - zagnieżdżone obiekty,
-        - lista wewnątrz obiektu,
-        - pola typów prostych.
 
+    Sat Jun 08 00:00:00 CEST 1991
+    Fri Jun 08 00:00:00 CET 8
+    Sat Jun 08 00:00:00 CEST 1991
+    Sat Jun 08 00:00:00 CEST 1991
+    Sat Jun 08 00:00:00 CEST 1991
+    Sat Jun 08 00:00:00 CEST 1991
+    Sat Jun 08 00:00:00 CEST 1991
+    Sat Jun 08 00:00:00 CEST 1991
+    Sat Jun 08 00:00:00 CEST 1991
+    Sat Jun 08 00:00:00 CEST 1991
+    Sat Jun 08 00:00:00 CEST 1991
+    Sat Jun 08 00:00:00 CEST 1991
+    Sat Jun 08 00:00:00 CEST 1991
+    Sat Jun 08 00:00:00 CEST 1991
+    Sat Jun 08 00:00:00 CEST 1991
+    Sat Jun 08 00:00:00 CEST 1991
+    Sat Jun 08 00:00:00 CEST 1991
+    Sat Jun 08 00:00:00 CEST 1991
+    Sat Jun 08 00:00:00 CEST 1991
+    Sat Jun 08 00:00:00 CEST 1991
+
+    co świadczy o wadliwym działaniu na wielu wątkach.
+
+
+    Zapewnienie bezpieczeństwa wątkowego zostało rozwiązne poprzez tworzenie nowej instancji SimpleDateFormat dla każdego wątku.
 
 
 ##Uruchomienie:

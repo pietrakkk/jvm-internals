@@ -1,71 +1,57 @@
 package com.lpiotrko.reflection.main;
 
-import com.lpiotrko.reflection.dao.Contact;
-import com.lpiotrko.reflection.dao.Phone;
-import com.lpiotrko.reflection.jsonparser.JsonParser;
-import org.codehaus.jackson.map.ObjectMapper;
-
-import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.*;
 
 public class Main {
-    public static void main(String[] args) {
-        JsonParser jsonParser = new JsonParser();
-        Phone phone = generateRandomData();
 
-        String jsonString = jsonParser.parseObjectToJsonString(phone);
-        String jsonStringByJackson = convertObjectToJsonString(phone);
+    public static final int NUMBER_OF_THREADS = 2;
+    public static final String DATE_FORMAT = "yyyyMMdd";
+    public static final int ITERATIONS_COUNT = 20;
 
-        System.out.println(jsonString);
-        System.out.println(jsonStringByJackson);
-        System.out.println(String.format("Test poprawności rozwiązania dla obiektu klasy Phone: %b",
-                jsonString.equals(jsonStringByJackson)));
+    public static void main(String[] args) throws ExecutionException, InterruptedException, ParseException {
+        SimpleDateFormat sf = new SimpleDateFormat(DATE_FORMAT);
+        String dateString = "19910608";
+
+
+
+        //use unsafe solution
+        Callable<Date> task = () -> sf.parse(dateString);
+        testSimpleDateFormat("Unsafe", ITERATIONS_COUNT, task);
+
+
+        //use thread safety solution
+        SimpleDateFormatSafety simpleDateFormatSafety = new SimpleDateFormatSafety();
+        Callable<Date> safetyTask = () -> simpleDateFormatSafety.convertDate(dateString);
+        testSimpleDateFormat("Safe", ITERATIONS_COUNT, safetyTask);
+
     }
 
 
+    public static void testSimpleDateFormat(String testType, int iterationCount, Callable<Date> task){
+        ExecutorService executorService = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    public static Phone generateRandomData(){
-        Phone phone = new Phone();
+        List<Future<Date>> results = new ArrayList<>();
 
-        List<Contact> contacts = new ArrayList<>();
-        Contact contact;
-        for(int i = 0; i < 10; i++){
-            contact = new Contact();
-            contact.setName("Łukasz");
-            contact.setSurname("Piotrkowski");
-            contact.setNumber("511739689");
-
-            contacts.add(contact);
+        for(int i = 0 ; i < iterationCount ; i++){
+            results.add(executorService.submit(task));
         }
+        executorService.shutdown();
 
-        contact = new Contact();
-        contact.setName("XYZ");
-        contact.setSurname("Piotrkowski");
-        contact.setNumber("511739689");
-
-        contacts.add(contact);
-
-        phone.setId(1L);
-        phone.setYop(2015);
-        phone.setModel("3310");
-        phone.setMake("Nokia");
-        phone.setContacts(contacts);
-        phone.setContact(contact);
-
-        return phone;
-    }
-
-
-    public static String convertObjectToJsonString(Object objectInstance) {
-        ObjectMapper mapper = new ObjectMapper();
 
         try {
-            return mapper.writeValueAsString(objectInstance);
-        } catch (IOException e) {
+            System.out.println();
+            System.out.println(testType);
+            for(Future<Date> result : results) {
+                System.out.println(result.get());
+            }
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
-
-        return null;
     }
 }
+
