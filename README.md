@@ -1,8 +1,7 @@
 # jvm-internals 2016
 
-##Testy mechanizmu refleksji:
+##SimpleDateFormat thread safety test:
 
-    SimpleDateFormat thread safety test
 
     Przeprowadzono testy SimpleFormat pod kątem thread safety. Jak łatwo się domyślić (czytając dokumentację) okazało się, że nie jest.
     Przeprowadzono próbę skonwertowania daty (20 iteracji), w zależności od liczby uruchomień, rezultaty prezentowały się m. in. następująco:
