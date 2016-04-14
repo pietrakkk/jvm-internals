@@ -1,38 +1,23 @@
 # jvm-internals 2016
 
-##SimpleDateFormat thread safety test:
+##Lab 7
 
 
-    Przeprowadzono testy SimpleFormat pod kątem thread safety. Jak łatwo się domyślić (czytając dokumentację) okazało się, że nie jest.
-    Przeprowadzono próbę skonwertowania daty (20 iteracji), w zależności od liczby uruchomień, rezultaty prezentowały się m. in. następująco:
+Dostępne endpointy:
 
+1.
 
-    Sat Jun 08 00:00:00 CEST 1991
-    Fri Jun 08 00:00:00 CET 8
-    Sat Jun 08 00:00:00 CEST 1991
-    Sat Jun 08 00:00:00 CEST 1991
-    Sat Jun 08 00:00:00 CEST 1991
-    Sat Jun 08 00:00:00 CEST 1991
-    Sat Jun 08 00:00:00 CEST 1991
-    Sat Jun 08 00:00:00 CEST 1991
-    Sat Jun 08 00:00:00 CEST 1991
-    Sat Jun 08 00:00:00 CEST 1991
-    Sat Jun 08 00:00:00 CEST 1991
-    Sat Jun 08 00:00:00 CEST 1991
-    Sat Jun 08 00:00:00 CEST 1991
-    Sat Jun 08 00:00:00 CEST 1991
-    Sat Jun 08 00:00:00 CEST 1991
-    Sat Jun 08 00:00:00 CEST 1991
-    Sat Jun 08 00:00:00 CEST 1991
-    Sat Jun 08 00:00:00 CEST 1991
-    Sat Jun 08 00:00:00 CEST 1991
-    Sat Jun 08 00:00:00 CEST 1991
+URL: http://localhost:8080/timetest/time/time_param
 
-    co świadczy o wadliwym działaniu na wielu wątkach.
+Powoduje usypianie na czas, który okreslony jest za pomocą parametry time_param.
 
+2.
 
-    Zapewnienie bezpieczeństwa wątkowego zostało rozwiązne poprzez tworzenie nowej instancji SimpleDateFormat dla każdego wątku.
+http://localhost:8080/timetest/time2/time_param
 
+Powoduje usypianie na czas = time_param * 2, który okreslony jest za pomocą parametry time_param.
 
 ##Uruchomienie:
-    mvn exec: java lub mvn compile exec:java
+    mvn compile
+    mvn assembly:assembly
+    mvn exec:exec
