@@ -1,27 +1,67 @@
 package com.lpiotrko.main;
 
-import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
-import org.glassfish.jersey.server.ResourceConfig;
+import com.lpiotrko.main.tests.GcAllocationsTest;
+import com.lpiotrko.main.tests.GcTimeTest;
 
-import java.io.IOException;
-import java.net.URI;
+import java.util.Scanner;
 
 public class Main {
-    public static final String BASE_URI = "http://localhost:8080/timetest/";
-    public static final String PACKAGE_NAME = "com.lpiotrko.endpoint";
+    private static final int TIME = 30000;
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final int MAX_CHOICES_NUMBER = 3;
 
-    public static HttpServer startServer() {
-        final ResourceConfig rc = new ResourceConfig().packages(PACKAGE_NAME);
-        return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
+
+    public static void main(String[] args) throws InterruptedException {
+        runBenchmarkTests();
     }
 
-    public static void main(String[] args) throws IOException {
-        final HttpServer server = startServer();
-        System.out.println(String.format("Jersey app started with WADL available at "
-                + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
+    public static void runBenchmarkTests() throws InterruptedException {
+        int userChoice = 0;
+        boolean validChoice = false;
+        int numberOfUserChoices = 1;
 
-        System.in.read();
-        server.stop();
+        while (numberOfUserChoices != MAX_CHOICES_NUMBER && !validChoice) {
+            System.out.println(Constant.MENU);
+            System.out.print(Constant.USER_CHOICE);
+            userChoice = scanner.nextInt();
+
+            validChoice = true;
+            switch (userChoice) {
+                case 11:
+                    GcAllocationsTest.runBenchmarkTest(1, true);
+                    break;
+                case 12:
+                    GcTimeTest.runBenchmarkTest(1, true, TIME);
+                    break;
+                case 21:
+                    GcAllocationsTest.runBenchmarkTest(10, true);
+                    break;
+                case 22:
+                    GcTimeTest.runBenchmarkTest(10, true, TIME);
+                    break;
+                case 31:
+                    GcAllocationsTest.runBenchmarkTest(1, false);
+                    break;
+                case 32:
+                    GcTimeTest.runBenchmarkTest(1, false, TIME);
+                    break;
+                case 41:
+                    GcAllocationsTest.runBenchmarkTest(1, false);
+                    break;
+                case 42:
+                    GcTimeTest.runBenchmarkTest(10, false, TIME);
+                    break;
+                default:
+                    validChoice = false;
+                    break;
+            }
+
+            if(!validChoice){
+                numberOfUserChoices += 1;
+                System.out.println(Constant.INVALID_USER_CHOICE);
+            }
+        }
+
+
     }
 }
