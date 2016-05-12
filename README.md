@@ -18,4 +18,4 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.91-b14, mixed mode)
 ## Uruchomienie:
     mvn compile assembly:assembly exec:exec
     
-![Statystyki](/statystyki.pdf)
+[Statystyki](/statystyki.pdf)
