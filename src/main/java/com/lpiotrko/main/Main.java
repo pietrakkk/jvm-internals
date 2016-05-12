@@ -6,7 +6,6 @@ import com.lpiotrko.main.tests.GcTimeTest;
 import java.util.Scanner;
 
 public class Main {
-    private static final int TIME = 30000;
     private static final Scanner scanner = new Scanner(System.in);
     private static final int MAX_CHOICES_NUMBER = 3;
 
@@ -31,25 +30,25 @@ public class Main {
                     GcAllocationsTest.runBenchmarkTest(1, true);
                     break;
                 case 12:
-                    GcTimeTest.runBenchmarkTest(1, true, TIME);
+                    GcTimeTest.runBenchmarkTest(1, true);
                     break;
                 case 21:
-                    GcAllocationsTest.runBenchmarkTest(10, true);
+                    GcAllocationsTest.runBenchmarkTest(Constant.THREAD_COUNT, true);
                     break;
                 case 22:
-                    GcTimeTest.runBenchmarkTest(10, true, TIME);
+                    GcTimeTest.runBenchmarkTest(Constant.THREAD_COUNT, true);
                     break;
                 case 31:
                     GcAllocationsTest.runBenchmarkTest(1, false);
                     break;
                 case 32:
-                    GcTimeTest.runBenchmarkTest(1, false, TIME);
+                    GcTimeTest.runBenchmarkTest(1, false);
                     break;
                 case 41:
                     GcAllocationsTest.runBenchmarkTest(1, false);
                     break;
                 case 42:
-                    GcTimeTest.runBenchmarkTest(10, false, TIME);
+                    GcTimeTest.runBenchmarkTest(Constant.THREAD_COUNT, false);
                     break;
                 default:
                     validChoice = false;

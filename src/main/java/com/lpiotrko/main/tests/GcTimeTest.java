@@ -12,7 +12,7 @@ public class GcTimeTest implements Runnable {
     private static long allocationsCount = 0;
     private static boolean constantSize;
 
-    public static void runBenchmarkTest(int threadsCount, boolean constantSize, int sleepTime) throws InterruptedException {
+    public static void runBenchmarkTest(int threadsCount, boolean constantSize) throws InterruptedException {
         setDefaultValues();
         GcTimeTest.constantSize = constantSize;
 
@@ -25,9 +25,11 @@ public class GcTimeTest implements Runnable {
         taskExecutor.shutdown();
 
         try {
-            taskExecutor.awaitTermination(sleepTime, TimeUnit.MILLISECONDS);
+            taskExecutor.awaitTermination(Constant.TIME, TimeUnit.MILLISECONDS);
             continueMemoryAllocating = false;
-            System.out.println(String.format(Constant.OBJECTS_CREATED_MSG, threadsCount, constantSize, allocationsCount, (sleepTime / 1000)));
+            double runningTimeInSeconds = Constant.TIME / 1000;
+
+            System.out.println(String.format(Constant.OBJECTS_CREATED_MSG, threadsCount, constantSize, allocationsCount, runningTimeInSeconds));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

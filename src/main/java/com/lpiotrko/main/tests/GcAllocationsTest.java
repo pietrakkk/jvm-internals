@@ -10,10 +10,6 @@ import java.util.concurrent.TimeUnit;
 
 public class GcAllocationsTest implements Runnable {
 
-    private static final int DEFAULT_OBJECTS_COUNT = 500;
-    private static final double SECONDS_DIVIDER = 1000000000.0;
-    private static final int SLEEP_TIME = 20000;
-
     private static long startTime = 0;
     private static long endTime = 0;
     private static long totalObjectsCount = 0;
@@ -26,11 +22,10 @@ public class GcAllocationsTest implements Runnable {
         setDefaultValues();
         GcAllocationsTest.constantSize = constantSize;
         GcAllocationsTest.threadCount = threadsCount;
-
-
         startTime = System.currentTimeMillis();
 
         ExecutorService taskExecutor = Executors.newFixedThreadPool(threadsCount);
+
         for (int i = 0; i < threadsCount; i++) {
             taskExecutor.execute(new GcAllocationsTest());
         }
@@ -40,9 +35,11 @@ public class GcAllocationsTest implements Runnable {
         try {
             taskExecutor.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
             endTime = System.currentTimeMillis();
+
             long resultTime = endTime - startTime;
+
             System.out.println(String.format(Constant.GC_ALLOCATIONS_RESULT_MSG,
-                    threadsCount, GcAllocationsTest.constantSize, DEFAULT_OBJECTS_COUNT, resultTime));
+                    threadsCount, GcAllocationsTest.constantSize, Constant.DEFAULT_OBJECTS_COUNT, resultTime));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -69,6 +66,6 @@ public class GcAllocationsTest implements Runnable {
 
     @Override
     public void run() {
-        allocObjects(DEFAULT_OBJECTS_COUNT);
+        allocObjects(Constant.DEFAULT_OBJECTS_COUNT);
     }
 }

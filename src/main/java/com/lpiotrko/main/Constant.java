@@ -22,4 +22,8 @@ public class Constant {
     public static final String INVALID_USER_CHOICE = "Nieprawidłowy numer!";
     public static final String GC_ALLOCATIONS_RESULT_MSG = "REZULTAT: Ilość wątków: %s, stała ilość obiektów : %s,  czas alokacji dla %s obiektów: %s ms.";
     public static final String OBJECTS_CREATED_MSG = "REZULTAT: Ilość wątków: %s, stała ilość obiektów: %s: %s obiektów stworzonych w %s sekund.";
+
+    public static final int DEFAULT_OBJECTS_COUNT = 1000;
+    public static final int THREAD_COUNT = 10;
+    public static final int TIME = 30000;
 }

@@ -1,23 +1,21 @@
 # jvm-internals 2016
 
-##Lab 7
+## Lab 9 - GC tests
 
+## Testy zostały przeprowadzone na następującym sprzęcie:
 
-Dostępne endpointy:
+Procesor: Intel® Core™ i5 i5-430M (2.26 GHz, 2.53 GHz Turbo, 3 MB cache)
+Pamięć: 4 GB DDR3 (1066 MHz)
+Rodzaj dysku twardego: SSD
+System operacyjny: Lubuntu 15.10 
 
-1.
+## Użyta w testach wersja jvm:
 
-URL: http://localhost:8080/timetest/time/time_param
+java version "1.8.0_91"
+Java(TM) SE Runtime Environment (build 1.8.0_91-b14)
+Java HotSpot(TM) 64-Bit Server VM (build 25.91-b14, mixed mode)
 
-Powoduje usypianie na czas, który okreslony jest za pomocą parametry time_param.
-
-2.
-
-http://localhost:8080/timetest/time2/time_param
-
-Powoduje usypianie na czas = time_param * 2, który okreslony jest za pomocą parametry time_param.
-
-##Uruchomienie:
-    mvn compile
-    mvn assembly:assembly
-    mvn exec:exec
+## Uruchomienie:
+    mvn compile assembly:assembly exec:exec
+    
+![Statystyki](/statystyki.pdf)
